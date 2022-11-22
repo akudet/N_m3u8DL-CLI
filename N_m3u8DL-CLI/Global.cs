@@ -23,6 +23,7 @@ namespace N_m3u8DL_CLI
         public static long MAX_SPEED = 0; //KB 速度上限
         public static string VIDEO_TYPE = "";
         public static string AUDIO_TYPE = "";
+        public static string TOKEN = "";
         public static bool HadReadInfo = false;
         private static bool noProxy = false;
         private static string useProxyAddress = "";

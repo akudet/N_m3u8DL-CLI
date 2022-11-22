@@ -174,6 +174,11 @@ namespace N_m3u8DL_CLI.NetCore
                 {
                     Global.NoProxy = true;
                 }
+                if (arguments.Has("--token"))
+                {
+                    var token = arguments.Get("--token").Next.ToString();
+                    Global.TOKEN = token;
+                }
                 if (arguments.Has("--proxyAddress"))
                 {
                     var proxy = arguments.Get("--proxyAddress").Next.ToString();

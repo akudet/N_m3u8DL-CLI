@@ -87,7 +87,12 @@ namespace N_m3u8DL_CLI
                     {
                         LOGGER.PrintLine("<" + SegIndex + " Downloading>");
                         LOGGER.WriteLine("<" + SegIndex + " Downloading>");
-                        byte[] encryptedBuff = Global.HttpDownloadFileToBytes(fileUrl, Headers, TimeOut);
+                        byte[] encryptedBuff = null;
+                        if (Global.TOKEN == "") {
+                            encryptedBuff = Global.HttpDownloadFileToBytes(fileUrl, Headers, TimeOut);
+                        } else {
+                            encryptedBuff = Global.HttpDownloadFileToBytes(fileUrl + "?token=" + Global.TOKEN, Headers, TimeOut);
+                        }
                         //byte[] encryptedBuff = Global.WebClientDownloadToBytes(fileUrl, Headers);
                         byte[] decryptBuff = null;
                         decryptBuff = Decrypter.AES128Decrypt(
