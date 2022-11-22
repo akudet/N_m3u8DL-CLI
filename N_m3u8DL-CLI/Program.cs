@@ -56,8 +56,8 @@ namespace N_m3u8DL_CLI.NetCore
             ServicePointManager.DefaultConnectionLimit = 1024;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3
                                    | SecurityProtocolType.Tls
-                                   | (SecurityProtocolType)0x300 //Tls11  
-                                   | (SecurityProtocolType)0xC00; //Tls12  
+                                   | (SecurityProtocolType)0x300 //Tls11
+                                   | (SecurityProtocolType)0xC00; //Tls12
             /******************************************************/
 
             try
@@ -234,7 +234,14 @@ namespace N_m3u8DL_CLI.NetCore
                     Downloader.ChaCha20KeyBase64 = o.ChaCha20KeyBase64;
                     Downloader.ChaCha20NonceBase64 = o.ChaCha20NonceBase64;
                 }
-
+                if (!string.IsNullOrEmpty(o.Token))
+                {
+                    Global.TOKEN = o.Token;
+                }
+                if (!string.IsNullOrEmpty(o.SeedConst))
+                {
+                    Global.SEED_CONST = o.SeedConst;
+                }
                 //Proxy
                 if (!string.IsNullOrEmpty(o.ProxyAddress))
                 {
@@ -360,8 +367,8 @@ namespace N_m3u8DL_CLI.NetCore
                 LOGGER.PrintLine(strings.startParsing + " " + testurl, LOGGER.Warning);
                 if (testurl.EndsWith(".json") && File.Exists(testurl))  //可直接跳过解析
                 {
-                    if (!Directory.Exists(Path.Combine(workDir, fileName)))//若文件夹不存在则新建文件夹   
-                        Directory.CreateDirectory(Path.Combine(workDir, fileName)); //新建文件夹  
+                    if (!Directory.Exists(Path.Combine(workDir, fileName)))//若文件夹不存在则新建文件夹
+                        Directory.CreateDirectory(Path.Combine(workDir, fileName)); //新建文件夹
                     File.Copy(testurl, Path.Combine(Path.Combine(workDir, fileName), "meta.json"), true);
                 }
                 else

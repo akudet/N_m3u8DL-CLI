@@ -844,6 +844,11 @@ namespace N_m3u8DL_CLI
                     if (key[1].StartsWith("http"))
                     {
                         string keyUrl = key[1];
+                        if (Global.TOKEN != "") {
+                            keyUrl = keyUrl + "?token=" + Global.TOKEN;
+                            keyUrl = keyUrl.Replace("videocc.net/", "videocc.net/playsafe/");
+                            LOGGER.WriteLine(strings.downloadingM3u8Key + " " + keyUrl);
+                        }
                         if (key[1].Contains("imooc.com/"))
                         {
                             key[1] = DecodeImooc.DecodeKey(Global.GetWebSource(key[1], Headers));
@@ -880,7 +885,14 @@ namespace N_m3u8DL_CLI
                         {
                             if (keyUrl.Contains("https://keydeliver.linetv.tw/jurassicPark"))  //linetv
                                 keyUrl = keyUrl + "?time=" + Global.GetTimeStamp(false);
-                            key[1] = Convert.ToBase64String(Global.HttpDownloadFileToBytes(keyUrl, Headers));
+                            if (Global.TOKEN != "")
+                            {
+                                key[1] = Convert.ToBase64String(PolyVideo.Decrypt(Global.HttpDownloadFileToBytes(keyUrl, Headers)));
+                            }
+                            else
+                            {
+                                key[1] = Convert.ToBase64String(Global.HttpDownloadFileToBytes(keyUrl, Headers));
+                            }
                         }
                     }
                     //DMM网站
@@ -891,6 +903,11 @@ namespace N_m3u8DL_CLI
                     else
                     {
                         string keyUrl = CombineURL(BaseUrl, key[1]);
+                        if (Global.TOKEN != "") {
+                            keyUrl = keyUrl + "?token=" + Global.TOKEN;
+                            keyUrl = keyUrl.Replace("videocc.net/", "videocc.net/playsafe/");
+                            LOGGER.WriteLine(strings.downloadingM3u8Key + " zz " + keyUrl);
+                        }
                         if (keyUrl.Contains("edu.51cto.com")) //51cto
                         {
                             string lessonId = Global.GetQueryString("lesson_id", keyUrl);
@@ -900,7 +917,14 @@ namespace N_m3u8DL_CLI
                         }
                         else
                         {
-                            key[1] = Convert.ToBase64String(Global.HttpDownloadFileToBytes(keyUrl, Headers));
+                            if (Global.TOKEN != "")
+                            {
+                                key[1] = Convert.ToBase64String(PolyVideo.Decrypt(Global.HttpDownloadFileToBytes(keyUrl, Headers)));
+                            }
+                            else
+                            {
+                                key[1] = Convert.ToBase64String(Global.HttpDownloadFileToBytes(keyUrl, Headers));
+                            }
                         }
                     }
                 }

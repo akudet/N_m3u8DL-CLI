@@ -64,6 +64,12 @@ namespace N_m3u8DL_CLI
         [Option("proxyAddress", HelpText = "Help_proxyAddress", ResourceType = typeof(strings))]
         public string ProxyAddress { get; set; }
 
+        [Option("token", HelpText = "Help_proxyAddress", ResourceType = typeof(strings))]
+        public string Token { get; set; }
+
+        [Option("seedConst", HelpText = "Help_proxyAddress", ResourceType = typeof(strings))]
+        public string SeedConst { get; set; }
+
         [Option("enableDelAfterDone", HelpText = "Help_enableDelAfterDone", ResourceType = typeof(strings))]
         public bool EnableDelAfterDone { get; set; }
 
