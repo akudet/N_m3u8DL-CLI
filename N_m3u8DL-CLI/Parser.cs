@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace N_m3u8DL_CLI
 {
@@ -849,7 +850,15 @@ namespace N_m3u8DL_CLI
                             keyUrl = keyUrl.Replace("videocc.net/", "videocc.net/playsafe/");
                             LOGGER.WriteLine(strings.downloadingM3u8Key + " " + keyUrl);
                         }
-                        if (key[1].Contains("imooc.com/"))
+
+                        if (key[1].Contains("bokecc.com/"))
+                        {
+                            var uri = new Uri(keyUrl);
+                            var info = HttpUtility.ParseQueryString(uri.Query).Get("info");
+                            LOGGER.WriteLine(strings.downloadingM3u8Key + " info " + info + " " + keyUrl);
+                            key[1] = Convert.ToBase64String(PolyVideo.Decrypt(Global.HttpDownloadFileToBytes(keyUrl, Headers),info));
+                        }
+                        else if (key[1].Contains("imooc.com/"))
                         {
                             key[1] = DecodeImooc.DecodeKey(Global.GetWebSource(key[1], Headers));
                         }
